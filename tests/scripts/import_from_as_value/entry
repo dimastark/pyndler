@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+
+from a import var as v
+
+print(v)

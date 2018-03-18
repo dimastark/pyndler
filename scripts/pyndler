@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import argparse
+import contextlib
+import sys
+
+from pyndler import bundle
+
+
+def main():
+    args = parse_args()
+
+    with output_file(args.output_file) as f:
+        f.write(bundle(args.entry))
+
+
+@contextlib.contextmanager
+def output_file(filename=None):
+    if not filename:
+        yield sys.stdout
+    else:
+        with open(filename, 'w') as f:
+            yield f
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description='Bundle Python packages into a single script',
+    )
+
+    parser.add_argument('entry')
+    parser.add_argument('-o', '--output-file')
+
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    main()
